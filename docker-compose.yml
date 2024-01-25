@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  simple-api-01:
+    image: simple-api:latest
+    environment:
+      - DELAY_LOWER_BOUND=200
+      - DELAY_UPPER_BOUND=3000
+    ports:
+      - "8093:8081"
+    networks:
+      - api-network
+    container_name: simple-api-01
+
+  simple-api-02:
+    image: simple-api:latest
+    environment:
+      - DELAY_LOWER_BOUND=200
+      - DELAY_UPPER_BOUND=3000
+    ports:
+      - "8092:8081"
+    networks:
+      - api-network
+    container_name: simple-api-02
+
+  simple-api-03:
+    image: simple-api:latest
+    environment:
+      - DELAY_LOWER_BOUND=200
+      - DELAY_UPPER_BOUND=3000
+    ports:
+      - "8091:8081"
+    networks:
+      - api-network
+    container_name: simple-api-03
+
+  rounting-api:
+    image: rounting-api:latest
+    environment:
+      - INSTANCES=[]
+      - DELAY_UPPER_BOUND=3000
+    ports:
+      - "8081:8081"
+    networks:
+      - api-network
+    depends_on:
+      - simple-api-01
+      - simple-api-02
+      - simple-api-03
+    container_name: rounting-api
+
+networks:
+  api-network:
+    driver: bridge

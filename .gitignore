@@ -1,0 +1,8 @@
+cs
+.bsp
+.idea
+project/project/
+project/target/
+target/
+
+.DS_Store
